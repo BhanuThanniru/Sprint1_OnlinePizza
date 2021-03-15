@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Customer")
+@Table(name="Sprint1_OnlinePizza_Customer")
 public class Customer {
 	@Id
 	private int customerId;
