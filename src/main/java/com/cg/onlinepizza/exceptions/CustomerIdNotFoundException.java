@@ -1,8 +1,12 @@
 package com.cg.onlinepizza.exceptions;
 
 public class CustomerIdNotFoundException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public CustomerIdNotFoundException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public CustomerIdNotFoundException(String message) {
