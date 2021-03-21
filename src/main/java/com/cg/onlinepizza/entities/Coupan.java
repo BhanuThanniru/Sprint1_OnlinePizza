@@ -1,81 +1,99 @@
 package com.cg.onlinepizza.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="Coupan1")
+@Table(name="Sprint1_Coupan")
 public class Coupan {
 	@Id
-	private int coupanId;
-	private String coupanName;
-	private String coupanType;
-	private String coupanDescription;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "id_coupan")
+	@SequenceGenerator(name = "id_coupan", sequenceName="ID_SEQUENCE_FOR_COUPAN" ,initialValue = 10001)
+	private int id;
+	@NotBlank(message="Name is mandatory")
+	private String name;
+	//@NotBlank(message="Type should be specified")
+	private String type;
+	private String description;
+	private int priceDiscount;
 	
-	
-	public int getCoupanId() {
-		return coupanId;
+	public int getId() {
+		return id;
+	}
+
+   public void setId(int id) {
+		this.id = id;
+	}
+
+    public String getName() {
+		return name;
 	}
 
 
-	public void setCoupanId(int coupanId) {
-		this.coupanId = coupanId;
+    public void setName(String name) {
+		this.name = name;
 	}
 
 
-	public String getCoupanName() {
-		return coupanName;
+
+    public String getType() {
+		return type;
 	}
 
 
-	public void setCoupanName(String coupanName) {
-		this.coupanName = coupanName;
+    public void setType(String type) {
+		this.type = type;
 	}
 
 
-	public String getCoupanType() {
-		return coupanType;
+   public String getDescription() {
+		return description;
 	}
 
 
-	public void setCoupanType(String coupanType) {
-		this.coupanType = coupanType;
+   public void setDescription(String description) {
+		this.description = description;
 	}
 
 
-	public String getCoupanDescription() {
-		return coupanDescription;
+   public int getPriceDiscount() {
+		return priceDiscount;
 	}
 
 
-	public void setCoupanDescription(String coupanDescription) {
-		this.coupanDescription = coupanDescription;
+   public void setPriceDiscount(int priceDiscount) {
+		this.priceDiscount = priceDiscount;
 	}
 
 
-	public Coupan(int coupanId, String coupanName, String coupanType, String coupanDescription) {
+    public Coupan(int id, String name, String type, String description, int priceDiscount) {
 		super();
-		this.coupanId = coupanId;
-		this.coupanName = coupanName;
-		this.coupanType = coupanType;
-		this.coupanDescription = coupanDescription;
-		
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.description = description;
+		this.priceDiscount = priceDiscount;
 	}
 
+	@Override
+	public String toString() {
+		return "Coupan [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description
+				+ ", priceDiscount=" + priceDiscount + "]";
+	}
 
 	public Coupan() {
 		super();
 	}
-	
-	@Override
-	public String toString() {
-		return "Coupan [coupanId=" + coupanId + ", coupanName=" + coupanName + ", coupanType=" + coupanType
-				+ ", coupanDescription=" + coupanDescription + "]";
-	}
-	
 }
+	
+	
+	
+	
 
 
 	/*

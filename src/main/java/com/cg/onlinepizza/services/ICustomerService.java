@@ -1,13 +1,13 @@
+package com.cg.onlinepizza.services;
 /*
- * package com.cg.onlinepizza.dao;
+ * package com.cg.onlinepizza.service;
  * 
  * import java.util.List;
  * 
  * import com.cg.onlinepizza.entities.Customer; import
  * com.cg.onlinepizza.exceptions.CustomerIdNotFoundException;
  * 
- * public interface ICustomerRepository { Customer addCustomer(Customer
- * customer);
+ * public interface ICustomerService { Customer addCustomer(Customer customer);
  * 
  * Customer updateCustomer(Customer customer);
  * 
@@ -15,7 +15,5 @@
  * 
  * List<Customer> viewCustomers();
  * 
- * Customer viewCustomer(int customerId) throws CustomerIdNotFoundException;
- * 
- * }
+ * Customer viewCustomer(int customerId) throws CustomerIdNotFoundException; }
  */

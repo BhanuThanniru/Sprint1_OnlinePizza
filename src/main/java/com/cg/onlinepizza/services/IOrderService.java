@@ -1,5 +1,6 @@
+package com.cg.onlinepizza.services;
 /*
- * package com.cg.onlinepizza.dao;
+ * package com.cg.onlinepizza.service;
  * 
  * import java.util.List;
  * 
@@ -8,7 +9,7 @@
  * com.cg.onlinepizza.exceptions.InvalidSizeException; import
  * com.cg.onlinepizza.exceptions.OrderIdNotFoundException;
  * 
- * public interface IOrderRepository { Order bookOrder(Order order);
+ * public interface IOrderService { Order bookOrder(Order order);
  * 
  * Order updateOrder(Order order);
  * 
