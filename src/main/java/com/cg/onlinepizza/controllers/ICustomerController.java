@@ -1,4 +1,4 @@
-package com.cg.onlinepizza;
+package com.cg.onlinepizza.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.onlinepizza.entities.Customer;
 import com.cg.onlinepizza.exceptions.CustomerIdNotFoundException;
-import com.cg.onlinepizza.service.ICustomerService;
+import com.cg.onlinepizza.services.ICustomerService;
 
 @RestController
 @RequestMapping("/rest")
@@ -29,7 +29,7 @@ public class ICustomerController {
 	@GetMapping("/customers")
 	public ResponseEntity<List<Customer>> allCustomer()
 	{
-		List<Customer> listAllCustomer=customerservice.viewCustomers();
+		List<Customer> listAllCustomer=customerservice.getCustomers();
 		
 		return new ResponseEntity<List<Customer>>(listAllCustomer,HttpStatus.CREATED);
 	}
@@ -45,7 +45,7 @@ public class ICustomerController {
 	@PutMapping("/customers/{id}")
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer, @PathVariable int id) throws CustomerIdNotFoundException
 	{
-		Optional<Customer> c1=customerservice.viewCustomer(id);
+		Optional<Customer> c1=customerservice.getCustomer(id);
 		if(c1.isPresent()==false)
 		{
 			return ResponseEntity.notFound().build();
@@ -60,7 +60,7 @@ public class ICustomerController {
 	@DeleteMapping("/customers/{id}")
 	public ResponseEntity<Customer> deleteCustomer(@PathVariable int id) throws CustomerIdNotFoundException
 	{
-		Optional<Customer> c1=customerservice.viewCustomer(id);
+		Optional<Customer> c1=customerservice.getCustomer(id);
 		if(c1.isPresent()==false)
 		{
 			return ResponseEntity.notFound().build();
@@ -76,14 +76,14 @@ public class ICustomerController {
 	@GetMapping("/customers/{id}")
 	public ResponseEntity<Optional<Customer>> viewCustomer(@PathVariable int id) throws CustomerIdNotFoundException
 	{
-		Optional<Customer> c1=customerservice.viewCustomer(id);
+		Optional<Customer> c1=customerservice.getCustomer(id);
 		if(c1.isPresent()==false)
 		{
 			return ResponseEntity.notFound().build();
 		}
 		else
 		{
-			customerservice.viewCustomer(id);
+			customerservice.getCustomer(id);
 			return new ResponseEntity<Optional<Customer>>(c1,HttpStatus.OK);
 		}
 	}

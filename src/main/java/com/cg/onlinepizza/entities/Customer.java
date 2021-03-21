@@ -1,27 +1,40 @@
 package com.cg.onlinepizza.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 @Entity
-@Table(name="Sprint1_OnlinePizza_Customer")
+@Table(name="PizzaCustomer")
+
+
 public class Customer {
 	@Id
-	private int customerId;
-	private String customerName;
-	private Long customerMobile;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id_customer")
+	@SequenceGenerator(name = "id_customer", sequenceName="ID_SEQUENCE_FOR_CUSTOMER" ,initialValue = 1)
+	private int id;
+	//@NotEmpty(message = "Customer name is required")
+	private String name;
+	private Long mobile;
 	private String customerEmail;
 	private String customerAddress;
-	private String userName;
+	private String userName;//mobile no.
 	private String password;
 
-	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+	private List<Order> orders;
 	
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerMobile="
-				+ customerMobile + ", customerEmail=" + customerEmail + ", customerAddress=" + customerAddress
+		return "Customer [id=" + id + ", Name=" + name + ", customerMobile="
+				+ mobile + ", customerEmail=" + customerEmail + ", customerAddress=" + customerAddress
 				+ ", userName=" + userName + ", password=" + password + "]";
 	}
 
@@ -29,40 +42,61 @@ public class Customer {
 		super();
 	}
 
-	public Customer(int customerId, String customerName, Long customerMobile, String customerEmail,
+	public Customer(String name, Long mobile, String customerEmail, String userName, String password) {
+		super();
+		this.name = name;
+		this.mobile = mobile;
+		this.customerEmail = customerEmail;
+		this.userName = userName;
+		this.password = password;
+	}
+
+	public Customer(String name, Long mobile, String customerEmail, String customerAddress, String userName,
+			String password, List<Order> orders) {
+		super();
+		this.name = name;
+		this.mobile = mobile;
+		this.customerEmail = customerEmail;
+		this.customerAddress = customerAddress;
+		this.userName = userName;
+		this.password = password;
+		this.orders = orders;
+	}
+
+	public Customer(int id, String name, Long mobile, String customerEmail,
 			String customerAddress, String userName, String password) {
 		super();
-		this.customerId = customerId;
-		this.customerName = customerName;
-		this.customerMobile = customerMobile;
+		this.id = id;
+		this.name = name;
+		this.mobile = mobile;
 		this.customerEmail = customerEmail;
 		this.customerAddress = customerAddress;
 		this.userName = userName;
 		this.password = password;
 	}
 
-	public int getCustomerId() {
-		return customerId;
+	public int getId() {
+		return id;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getCustomerName() {
-		return customerName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Long getCustomerMobile() {
-		return customerMobile;
+	public Long getMobile() {
+		return mobile;
 	}
 
-	public void setCustomerMobile(Long customerMobile) {
-		this.customerMobile = customerMobile;
+	public void setMobile(Long mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getCustomerEmail() {
