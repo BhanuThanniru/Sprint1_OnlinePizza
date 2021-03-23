@@ -17,9 +17,9 @@ public interface IOrderService {
 
 	Order cancelOrder(int id) throws OrderIdNotFoundException;
 
-	Order getOrder(int id) throws OrderIdNotFoundException;
+	Order getOrders(int id) throws OrderIdNotFoundException;
 	
-	List<Order> getOrder();
+	List<Order> getOrders();
 
 	Order calculateTotal(String size,  Order order) throws InvalidSizeException, CustomerIdNotFoundException, OrderIdNotFoundException;
 	//Order calculateTotal(String size, Order order) throws InvalidSizeException;

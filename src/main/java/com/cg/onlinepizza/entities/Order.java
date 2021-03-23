@@ -20,17 +20,17 @@ public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id_order")
-	@SequenceGenerator(name = "id_order", sequenceName="ID_SEQUENCE_FOR_ORDER" ,initialValue = 10001, allocationSize = 1)
+	@SequenceGenerator(name = "id_order", sequenceName="ID_SEQUENCE_FOR_ORDER" ,initialValue = 10001)
 	private int id;
 	
 	@NotEmpty(message = "Pizza Type is required while ordering")
 	private String type;
 	private String description;
 	
-	@ManyToOne//bi-directional
+	@ManyToOne
 	private Customer customer;
 	
-	@NotEmpty(message = "Select mode of transaction for ordering")
+	@NotEmpty(message = "Select mode of transaction to order")
 	private String transactionMode;
 	
 	@ElementCollection
@@ -63,6 +63,13 @@ public class Order {
 	}
 	
 	
+	public Order(int id, String type, String description, String transactionMode) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.description = description;
+		this.transactionMode = transactionMode;
+	}
 	public Order(String type, String description, Customer customer, String transactionMode, Map<Integer, Integer> cart,
 			Coupan coupan, double totalCost) {
 		super();

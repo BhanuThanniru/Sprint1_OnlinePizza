@@ -15,8 +15,6 @@ public interface IOrderRepository extends JpaRepository<Order,Integer> {
     @Query("select p from Order p where customer_id= ?1")
     List<Order> getAllOrders(@Param("customerId") int customerId);
     
-    //@Query("select cost from PizzaCost p where size = ?1 and pizza.id = ?2")
-    //public int getPriceBasedOnPizzaSize(@Param("size") String size, @Param("id") int id );
 
 }
 

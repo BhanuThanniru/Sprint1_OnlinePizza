@@ -35,76 +35,46 @@ public class OrderController {
 	private ICustomerService custService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Order> viewOrderListById(@PathVariable int id) throws OrderIdNotFoundException {
+	public ResponseEntity<Order> getOrderListById(@PathVariable int id) throws OrderIdNotFoundException {
 
-		Order order = orderService.getOrder(id);
+		Order order = orderService.getOrders(id);
 		return new ResponseEntity<Order>(order, HttpStatus.OK);
 	}
 	
-	@GetMapping("")
-	public ResponseEntity<List<Order>> viewOrder() throws OrderIdNotFoundException {
+	@GetMapping
+	public ResponseEntity<List<Order>> getOrders() throws OrderIdNotFoundException {
 
-		List<Order> order = orderService.getOrder();
+		List<Order> order = orderService.getOrders();
 		return new ResponseEntity<List<Order>>(order, HttpStatus.OK);
 	}
 
-	@PostMapping("")
-	public ResponseEntity<Order> bookOrder( @Valid @RequestBody Order order) {
-		//System.out.println("Booking pizza's:");
-	
+	@PostMapping
+	public ResponseEntity<Order> bookOrder(@Valid @RequestBody Order order) {
 		orderService.bookOrder(order);
-		
 		return new ResponseEntity<Order>(order, HttpStatus.CREATED);
 	}
 	
-	/*
-	 * @PutMapping("/orders") public ResponseEntity<Order> updateOrder(@RequestBody
-	 * Order order){ orderService.updateOrder(order); return new
-	 * ResponseEntity<Order>(order, HttpStatus.ACCEPTED); }
-	 */
-
-	@PatchMapping("/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Order> updateOrder(@PathVariable int id, @RequestBody Customer customer) throws OrderIdNotFoundException, CustomerIdNotFoundException{
-		Order order2 = orderService.getOrder(id);
-		
+		Order order2 = orderService.getOrders(id);
 		int custId = customer.getId();
 		
-		Customer cust = custService.getCustomer(custId).get();
-		
-		order2.setCustomer(cust);
-		
-		Order updatedOrder = orderService.updateOrder(order2);
-		
-		
+		order2.setCustomer(customer);
+		custService.updateCustomer(customer);
+		Order updatedOrder = orderService.updateOrder(order2);	
 		return new ResponseEntity<Order>(updatedOrder, HttpStatus.ACCEPTED);
 	}
 
-	/*
-	 * @PatchMapping("/orders/{id}/{custId}") public ResponseEntity<Order>
-	 * updateOrder(@PathVariable int id,@PathVariable int custId,@RequestBody Coupan
-	 * coupan) throws OrderIdNotFoundException, CustomerIdNotFoundException{ Order
-	 * order2 = orderService.viewOrder(id); System.out.println(order2); Customer
-	 * cust = custService.viewCustomer(custId).get(); Coupan coupan1 =
-	 * coupanService.viewCoupans(custId); System.out.println(cust);
-	 * order2.setCustomer(cust); //Order updatedOrder =
-	 * orderService.patchTheOrder(order2);
-	 * 
-	 * Order updatedOrder = orderService.updateOrder(order2);
-	 * System.out.println(updatedOrder);
-	 * 
-	 * return new ResponseEntity<Order>(updatedOrder, HttpStatus.ACCEPTED); }
-	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Order> cancelOrder(@PathVariable int id) throws OrderIdNotFoundException{
 		orderService.cancelOrder(id);
 		return new ResponseEntity<Order>(HttpStatus.ACCEPTED);
 		
 	}
-	@PutMapping("/{size}")
+	@PutMapping("/cost/{size}")
 	public ResponseEntity<Order> calculateTotalCost(@PathVariable String size, @RequestBody Order order) throws InvalidSizeException, CustomerIdNotFoundException, OrderIdNotFoundException
 	{
 		order = orderService.calculateTotal(size, order);
-		//System.out.println("updating in order");
 		orderService.updateOrder(order);
 		return new ResponseEntity<Order>(order, HttpStatus.OK);
 	}

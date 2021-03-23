@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "PizzaCost")
@@ -20,11 +20,11 @@ public class PizzaCost {
 	@SequenceGenerator(name = "id_pizza_cost", sequenceName="ID_SEQUENCE_FOR_PIZZA_COST" ,initialValue = 20001, allocationSize = 1)
 	private int costId;
 	
-	@Enumerated
-	@NotEmpty(message = "Pizza Size is required")
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "Pizza Size can't be empty")
 	private Size pizzaSize;
 	
-	@NotEmpty(message = "Pizza Cost is required")
+	@NotNull(message = "Pizza Cost is required")
 	private double cost;
 	
 	@ManyToOne

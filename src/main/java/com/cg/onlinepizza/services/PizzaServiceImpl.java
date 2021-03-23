@@ -1,8 +1,13 @@
 package com.cg.onlinepizza.services;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +15,12 @@ import org.springframework.stereotype.Service;
 import com.cg.onlinepizza.dao.IPizzaRepository;
 import com.cg.onlinepizza.entities.Pizza;
 import com.cg.onlinepizza.entities.PizzaCost;
+import com.cg.onlinepizza.entities.Size;
+import com.cg.onlinepizza.exceptions.InvalidMinCostException;
 import com.cg.onlinepizza.exceptions.PizzaIdNotFoundException;
 
 @Service
+@Transactional
 public class PizzaServiceImpl implements IPizzaService {
 
 	@Autowired
@@ -26,56 +34,59 @@ public class PizzaServiceImpl implements IPizzaService {
 	@Override
 	public Pizza deletePizza(int id) throws PizzaIdNotFoundException{
 		Optional<Pizza> pizza = pizzaRepository.findById(id);
-		pizza.orElseThrow(() -> new PizzaIdNotFoundException("Pizza Not Found"));
-		pizzaRepository.save(pizza.get());
+		pizza.orElseThrow(() -> new PizzaIdNotFoundException("Pizza Id Not Found"));
+		pizzaRepository.deleteById(id);
 		return pizza.get();
 	}
 	@Override
-	public Pizza getPizza(int pizzaId) throws PizzaIdNotFoundException {
+	public Pizza getPizzaById(int pizzaId) throws PizzaIdNotFoundException {
 		Optional<Pizza> pizza = pizzaRepository.findById(pizzaId);
-		return pizza.orElseThrow(() -> new PizzaIdNotFoundException("Pizza Not Found"));	
+		return pizza.orElseThrow(() -> new PizzaIdNotFoundException("Pizza Id Not Found"));	
 	}
 
 	@Override
 	public List<Pizza> getPizzaList() {
 		List<Pizza> pizzaList = pizzaRepository.findAll();
-		//System.out.println("Pizza list ::::"+pizzaList);
 		return pizzaList;
 	}
-
-	//@Query("select p1.pizzaName from Pizza p1 where exists (select p from PizzaCost p where p.cost between ?1 and ?2)")
-	//List<Pizza> viewPizza(@Param("list") List<PizzaCost> list);
 	
-	//@Query("select p from PizzaCost p where p.cost between ?1 and ?2")
-	//List<PizzaCost> viewPizzaListOfMinMaxCost(@Param("minCost")double minCost, @Param("maxCost") double maxCost);
-	//getPizzaByMinMaxCost
+	
+
 	@Override
-	public List<Pizza> viewPizzaMinMaxCost(double minCost, double maxCost) {
+	public Pizza updatePizza(Pizza pizza) throws PizzaIdNotFoundException {
+		int pizzaId = pizza.getId();
+		Optional<Pizza> pizza1 = pizzaRepository.findById(pizzaId);
+		pizza1.orElseThrow(() -> new  PizzaIdNotFoundException("Pizza Id Not Found"));
+		pizzaRepository.save(pizza);
+		return pizza;
 		
-		List<PizzaCost> pizzaCost = pizzaRepository.viewPizzaListOfMinMaxCost(minCost, maxCost);
-		
-		List<Pizza> pizza = pizzaRepository.findAll(); 
-				
-		/*
-		 * List<Pizza> listOutput = pizza.stream() .filter(e ->
-		 * pizza.stream().map(pizzaCost::).anyMatch(name -> name.equals(e.getName())))
-		 * .collect(Collectors.toList());
-		 */
-		
-		/*
-		 * List<Pizza> pizzaList = repo.findAll();
-		 * System.out.println("Pizza list ::::"+pizzaList);
-		 * 
-		 * List<Pizza> finalList = pizzaList.stream().filter((pizza) ->
-		 * pizza.getCostList().contains(list1.get())).collect(Collectors.toList());
-		 * //List<Pizza> finalList = repo.viewPizza(list1);
-		 * //System.out.println("finalList :" +finalList);
-		 */		
+	}
+
+	@Override
+	public List<Pizza> getPizzaByType(String pizzaType) {
+		List<Pizza> pizza = pizzaRepository.getPizzaByType(pizzaType);
 		return pizza;
 	}
 
 	@Override
-	public Pizza updatePizza(Pizza pizza) {
-		return pizzaRepository.save(pizza);
+	public List<Pizza> getPizzaByName(String pizzaName) {
+		List<Pizza> pizza = pizzaRepository.getPizzaByName(pizzaName);
+		return pizza;
 	}
+
+	@Override
+	public List<Pizza> getPizzaMinMaxCost(double minCost, double maxCost) throws InvalidMinCostException {
+		List<PizzaCost> pizzaCost =  pizzaRepository.getPizzaListOfMinMaxCost(minCost, maxCost);
+		List<Pizza> pizza = pizzaRepository.findAll();
+		List<Pizza> pizzaListMinMaxCost = new ArrayList<Pizza>();
+		for(Pizza p : pizza)
+		{
+			System.out.println(p.getCostList());
+			
+			
+		}
+		System.out.println(pizzaListMinMaxCost);
+		return pizzaListMinMaxCost;
+	}
+	
 }

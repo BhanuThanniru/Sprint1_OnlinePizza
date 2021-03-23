@@ -21,7 +21,7 @@ import com.cg.onlinepizza.services.ICustomerService;
 
 @RestController
 @RequestMapping("/rest")
-public class ICustomerController {
+public class CustomerController {
 	
 	@Autowired
 	private ICustomerService customerservice;

@@ -16,24 +16,18 @@ import com.cg.onlinepizza.exceptions.PizzaIdNotFoundException;
 public interface IPizzaService {
 	Pizza addPizza(Pizza Pizza);
 
-	//Pizza updatePizza(int pizzaId, String pizzaName);
-	
-	Pizza updatePizza(Pizza pizza);
+	Pizza updatePizza(Pizza pizza) throws PizzaIdNotFoundException;
 
 	Pizza deletePizza(int PizzaId) throws PizzaIdNotFoundException;
 
-	Pizza getPizza(int PizzaId) throws PizzaIdNotFoundException;
+	Pizza getPizzaById(int PizzaId) throws PizzaIdNotFoundException;
 
 	List<Pizza> getPizzaList();
+	
+	List<Pizza> getPizzaByType(String pizzaType);
+	
+	List<Pizza> getPizzaByName(String pizzaName);
+	
+	List<Pizza> getPizzaMinMaxCost(double minCost, double maxCost) throws InvalidMinCostException;
 
-	/*
-	 * @Query("select p.pizzaName from Pizza p where p.pizzaCostList in :pizzaCost")
-	 * List<Pizza> viewPizza(@Param("list") List<PizzaCost> pizzaCost);
-	 * 
-	 * @Query("select p.pizzaCostId from PizzaCost p where p.cost between ?1 and ?2"
-	 * ) List<PizzaCost> viewPizzaListOfMinMaxCost(@Param("minCost")double
-	 * minCost, @Param("maxCost") double maxCost);
-	 */
-
-	List<Pizza> viewPizzaMinMaxCost(double minCost, double maxCost);
 }

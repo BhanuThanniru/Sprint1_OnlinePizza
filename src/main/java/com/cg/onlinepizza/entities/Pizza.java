@@ -20,7 +20,7 @@ public class Pizza {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id_pizza")
-	@SequenceGenerator(name = "id_pizza", sequenceName="ID_SEQUENCE_FOR_PIZZA" ,initialValue = 101, allocationSize = 1)
+	@SequenceGenerator(name = "id_pizza", sequenceName="ID_SEQUENCE_FOR_PIZZA" ,initialValue = 101)
 	private int id;
 	
 	@NotEmpty(message = "Pizza Type is required")
@@ -34,7 +34,7 @@ public class Pizza {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Pizza_ID")
-	List<@NotEmpty PizzaCost> costList = new ArrayList<PizzaCost>();
+	List<PizzaCost> costList = new ArrayList<PizzaCost>();
 
 	public Pizza() {
 		super();

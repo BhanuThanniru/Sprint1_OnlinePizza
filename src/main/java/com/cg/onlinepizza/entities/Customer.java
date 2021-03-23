@@ -20,7 +20,6 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id_customer")
 	@SequenceGenerator(name = "id_customer", sequenceName="ID_SEQUENCE_FOR_CUSTOMER" ,initialValue = 1)
 	private int id;
-	//@NotEmpty(message = "Customer name is required")
 	private String name;
 	private Long mobile;
 	private String customerEmail;
@@ -28,7 +27,7 @@ public class Customer {
 	private String userName;//mobile no.
 	private String password;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+	@OneToMany(cascade = CascadeType.ALL , mappedBy = "customer")
 	private List<Order> orders;
 	
 	@Override

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.onlinepizza.entities.Pizza;
 import com.cg.onlinepizza.exceptions.InvalidMinCostException;
 import com.cg.onlinepizza.exceptions.PizzaIdNotFoundException;
+import com.cg.onlinepizza.exceptions.PizzaTypeNotFoundExcpetion;
 import com.cg.onlinepizza.services.IPizzaService;
 
 @RestController
@@ -28,24 +29,22 @@ public class PizzaController {
 	@Autowired
 	private IPizzaService pizzaService;
 
-	@GetMapping("")
+	@GetMapping
 	public ResponseEntity<List<Pizza>> getPizzaList() {
 
 		List<Pizza> listAllPizzas = pizzaService.getPizzaList();
 		return new ResponseEntity<List<Pizza>>(listAllPizzas, HttpStatus.OK);
 	}
 
-	@PostMapping("")
+	@PostMapping
 	public ResponseEntity<Pizza> addPizza(@Valid @RequestBody Pizza pizza) {
-		//System.out.println("Inserting pizza's:");
 		pizzaService.addPizza(pizza);
 		return new ResponseEntity<Pizza>(pizza, HttpStatus.CREATED);
 	}
 
-	@PutMapping("")
-	public ResponseEntity<Pizza> updatePizza(@Valid @RequestBody Pizza pizza) {
-		// Pizza customerById = pizzaService.getCustomerById(id);
-		 pizzaService.updatePizza(pizza);
+	@PutMapping
+	public ResponseEntity<Pizza> updatePizza( @Valid @RequestBody Pizza pizza) throws PizzaIdNotFoundException {
+		pizzaService.updatePizza(pizza);
 		return new ResponseEntity<Pizza>(pizza, HttpStatus.ACCEPTED);
 
 	}
@@ -56,18 +55,33 @@ public class PizzaController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Pizza> viewPizzaListById(@PathVariable int id) throws PizzaIdNotFoundException {
+	public ResponseEntity<Pizza> getPizzaById(@PathVariable int id) throws PizzaIdNotFoundException {
 
-		Pizza pizza = pizzaService.getPizza(id);
+		Pizza pizza = pizzaService.getPizzaById(id);
 		return new ResponseEntity<Pizza>(pizza, HttpStatus.OK);
 	}
 
 
-	@GetMapping("/pizzas/{minCost}/{maxCost}") 
-	public ResponseEntity<List<Pizza>> viewPizzaListByMincostMaxCost(@PathVariable double minCost,@PathVariable
+	@GetMapping("/type/{pizzaType}")
+	public ResponseEntity<List<Pizza>>getPizzaListByType(@PathVariable String pizzaType) throws PizzaTypeNotFoundExcpetion {
+
+		List<Pizza> pizza = pizzaService.getPizzaByType(pizzaType);
+		return new ResponseEntity<List<Pizza>>(pizza, HttpStatus.OK); 
+	}
+
+	@GetMapping("/name/{pizzaName}")
+	public ResponseEntity<List<Pizza>>getPizzaListByName(@PathVariable String pizzaName) throws PizzaTypeNotFoundExcpetion {
+
+		List<Pizza> pizza = pizzaService.getPizzaByName(pizzaName);
+		return new ResponseEntity<List<Pizza>>(pizza, HttpStatus.OK); 
+	}
+
+	@GetMapping("/{minCost}/{maxCost}") 
+	public ResponseEntity<List<Pizza>> getPizzaListByMincostMaxCost(@PathVariable double minCost,@PathVariable
 			double maxCost) throws PizzaIdNotFoundException, InvalidMinCostException {
 
-		List<Pizza> pizza = pizzaService.viewPizzaMinMaxCost(minCost, maxCost); 
+		List<Pizza> pizza = pizzaService.getPizzaMinMaxCost(minCost, maxCost); 
 		return new  ResponseEntity<List<Pizza>>(pizza, HttpStatus.OK);
 	}
+
 }
