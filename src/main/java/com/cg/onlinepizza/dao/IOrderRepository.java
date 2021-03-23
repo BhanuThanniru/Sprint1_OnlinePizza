@@ -1,22 +1,20 @@
 package com.cg.onlinepizza.dao;
-
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
 import com.cg.onlinepizza.entities.Order;
-import com.cg.onlinepizza.entities.Pizza;
-import com.cg.onlinepizza.exceptions.InvalidSizeException;
-import com.cg.onlinepizza.exceptions.OrderIdNotFoundException;
-
-public interface IOrderRepository {
-	Order bookOrder(Order order);
-
-	Order updateOrder(Order order);
-
-	Order cancelOrder(int orderId) throws OrderIdNotFoundException;
-
-	Order viewOrder(int orderId) throws OrderIdNotFoundException;
-
-	List<Order> caluculateTotal(String size, int quantity, List<Pizza> pizza) throws InvalidSizeException;
-}
-
-
+  
+  @Repository 
+  public interface IOrderRepository extends JpaRepository<Order,Integer> {
+	  
+	  @Query("select p from Order p where p.customer.id= :customerId")
+	  List<Order> getAllOrders(@Param("customerId") int customerId);
+  
+  }
+  
+  
+ 

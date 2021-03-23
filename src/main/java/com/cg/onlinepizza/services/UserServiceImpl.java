@@ -15,7 +15,7 @@ import com.cg.onlinepizza.entities.User;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private IUserRepository userRepo;

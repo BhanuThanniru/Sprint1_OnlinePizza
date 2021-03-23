@@ -5,7 +5,7 @@ import java.util.List;
 import com.cg.onlinepizza.entities.Order;
 import com.cg.onlinepizza.entities.User;
 
-public interface UserService {
+public interface IUserService {
 	
 	public User addUser(User user);
 	public User signIn(User user);

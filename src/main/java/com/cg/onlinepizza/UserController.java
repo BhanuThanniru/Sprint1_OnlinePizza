@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.onlinepizza.entities.User;
-import com.cg.onlinepizza.services.UserService;
+import com.cg.onlinepizza.services.IUserService;
 
 
 @RestController
@@ -23,7 +23,7 @@ import com.cg.onlinepizza.services.UserService;
 public class UserController {
 	
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	
 	@PostMapping
 	public ResponseEntity<User> addUser(User user)
