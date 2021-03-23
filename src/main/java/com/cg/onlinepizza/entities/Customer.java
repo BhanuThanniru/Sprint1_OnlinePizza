@@ -4,34 +4,22 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="sprint1_onlinepizza_customer")
 public class Customer extends User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id")
-    @SequenceGenerator(name = "id" ,initialValue = 10001)
-	private int id;
+	@NotNull(message="Name should not be blank")
 	private String name;
+	@NotNull(message="Email should not be blank")
 	private String email;
+	@NotNull(message="Address should not be blank")
 	private String address;
 	
-	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="customer")
-	 List<Order> orders;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	@OneToMany(cascade=CascadeType.ALL,targetEntity=Order.class)
+	@JoinColumn(name = "customer_id")
+	private List<Order> orders;
 	public String getName() {
 		return name;
 	}
@@ -57,19 +45,40 @@ public class Customer extends User {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-	public Customer(int id, String name, String email, String address,  List<Order> orders) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.address = address;
-		this.orders = orders;
-	}
+//	public Customer(String name, String email, String address,  List<Order> orders) {
+//		super();
+//		this.name = name;
+//		this.email = email;
+//		this.address = address;
+//		this.orders = orders;
+//	}
 	public Customer() {
 		super();
 	}
 	
 	
+	
+	
+	public Customer(int id, String mobileNumber, String password, String role,
+			@NotNull(message = "Name should not be blank") String name,
+			@NotNull(message = "Email should not be blank") String email) {
+		super(id, mobileNumber, password, role);
+		this.name = name;
+		this.email = email;
+	}
+	public Customer(String mobileNumber, String password, String role,String name) {
+		super(mobileNumber, password, role);
+		this.name=name;
+	}
+	public Customer(int id, String mobileNumber, String password, String role,
+		@NotNull(message = "Name should not be blank") String name,
+		@NotNull(message = "Email should not be blank") String email,
+		@NotNull(message = "Address should not be blank") String address) {
+	super(id, mobileNumber, password, role);
+	this.name = name;
+	this.email = email;
+	this.address = address;
+}
 	public Customer(String name, String email, String address,  List<Order> orders) {
 		super();
 		this.name = name;
@@ -79,7 +88,7 @@ public class Customer extends User {
 	}
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", address=" + address + ", orders=" + orders + "]";
+		return "Customer  name=" + name + ", email=" + email + ", address=" + address + ", orders=" + orders + "]";
 	}
 
 	
