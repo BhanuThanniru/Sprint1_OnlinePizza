@@ -6,18 +6,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+
 
 @Entity
 @Table(name="Sprint1_Coupan")
 public class Coupan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "id_coupan")
-	@SequenceGenerator(name = "id_coupan", sequenceName="ID_SEQUENCE_FOR_COUPAN" ,initialValue = 10001)
+	@SequenceGenerator(name = "id_coupan", sequenceName="ID_SEQUENCE_FOR_COUPAN" ,initialValue = 10001, allocationSize=1)
 	private int id;
-	@NotBlank(message="Name is mandatory")
+	@NotEmpty(message="Coupan Name is mandatory")
 	private String name;
-	//@NotBlank(message="Type should be specified")
+	@NotEmpty(message=" Coupan Type should be specified")
 	private String type;
 	private String description;
 	private int priceDiscount;

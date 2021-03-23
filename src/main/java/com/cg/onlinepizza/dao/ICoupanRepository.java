@@ -13,14 +13,18 @@ import com.cg.onlinepizza.exceptions.InvalidCoupanOperationException;
 @Repository
 public interface ICoupanRepository extends JpaRepository<Coupan, Integer>
 {
-/*{
-	Coupan addCoupans(Coupan coupan);
 
-	Coupan editCoupans(Coupan coupan)throws InvalidCoupanOperationException ;
+	/*
+	 * Coupan addCoupans(Coupan coupan);
+	 * 
+	 * Coupan editCoupans(Coupan coupan);
+	 * 
+	 * //Coupan deleteCoupans(int id)throws CoupanIdNotFoundException;
+	 * 
+	 * List<Coupan> viewCoupans();
+	 * 
+	 * Coupan viewCoupan(int id) throws CoupanIdNotFoundException;
+	 */
+     
 
-	Coupan deleteCoupans(int coupanId)throws CoupanIdNotFoundException;
-
-	List<Coupan> viewCoupans();
-}
-*/
 }
