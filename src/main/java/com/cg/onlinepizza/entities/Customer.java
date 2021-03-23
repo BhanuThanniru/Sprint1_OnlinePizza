@@ -4,130 +4,97 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 @Entity
-@Table(name="PizzaCustomer")
-
-
-public class Customer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id_customer")
-	@SequenceGenerator(name = "id_customer", sequenceName="ID_SEQUENCE_FOR_CUSTOMER" ,initialValue = 1)
-	private int id;
+public class Customer extends User {
+	@NotNull(message="Name should not be blank")
 	private String name;
-	private Long mobile;
-	private String customerEmail;
-	private String customerAddress;
-	private String userName;//mobile no.
-	private String password;
-
-	@OneToMany(cascade = CascadeType.ALL , mappedBy = "customer")
-	private List<Order> orders;
+	@NotNull(message="Email should not be blank")
+	private String email;
+	@NotNull(message="Address should not be blank")
+	private String address;
 	
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", Name=" + name + ", customerMobile="
-				+ mobile + ", customerEmail=" + customerEmail + ", customerAddress=" + customerAddress
-				+ ", userName=" + userName + ", password=" + password + "]";
-	}
-
-	public Customer() {
-		super();
-	}
-
-	public Customer(String name, Long mobile, String customerEmail, String userName, String password) {
-		super();
-		this.name = name;
-		this.mobile = mobile;
-		this.customerEmail = customerEmail;
-		this.userName = userName;
-		this.password = password;
-	}
-
-	public Customer(String name, Long mobile, String customerEmail, String customerAddress, String userName,
-			String password, List<Order> orders) {
-		super();
-		this.name = name;
-		this.mobile = mobile;
-		this.customerEmail = customerEmail;
-		this.customerAddress = customerAddress;
-		this.userName = userName;
-		this.password = password;
-		this.orders = orders;
-	}
-
-	public Customer(int id, String name, Long mobile, String customerEmail,
-			String customerAddress, String userName, String password) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.mobile = mobile;
-		this.customerEmail = customerEmail;
-		this.customerAddress = customerAddress;
-		this.userName = userName;
-		this.password = password;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	@OneToMany(cascade=CascadeType.ALL,targetEntity=Order.class)
+	@JoinColumn(name = "customer_id")
+	private List<Order> orders;
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Long getMobile() {
-		return mobile;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setMobile(Long mobile) {
-		this.mobile = mobile;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-	public String getCustomerEmail() {
-		return customerEmail;
+	public String getAddress() {
+		return address;
 	}
-
-	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-
-	public String getCustomerAddress() {
-		return customerAddress;
+	
+	public List<Order> getOrders() {
+		return orders;
 	}
-
-	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
-
-	public String getUserName() {
-		return userName;
+//	public Customer(String name, String email, String address,  List<Order> orders) {
+//		super();
+//		this.name = name;
+//		this.email = email;
+//		this.address = address;
+//		this.orders = orders;
+//	}
+	public Customer() {
+		super();
 	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	
+	
+	
+	
+	public Customer(int id, String mobileNumber, String password, String role,
+			@NotNull(message = "Name should not be blank") String name,
+			@NotNull(message = "Email should not be blank") String email) {
+		super(id, mobileNumber, password, role);
+		this.name = name;
+		this.email = email;
 	}
-
-	public String getPassword() {
-		return password;
+	public Customer(String mobileNumber, String password, String role,String name) {
+		super(mobileNumber, password, role);
+		this.name=name;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
+	public Customer(int id, String mobileNumber, String password, String role,
+		@NotNull(message = "Name should not be blank") String name,
+		@NotNull(message = "Email should not be blank") String email,
+		@NotNull(message = "Address should not be blank") String address) {
+	super(id, mobileNumber, password, role);
+	this.name = name;
+	this.email = email;
+	this.address = address;
 }
+	public Customer(String name, String email, String address,  List<Order> orders) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.orders = orders;
+	}
+	@Override
+	public String toString() {
+		return "Customer  name=" + name + ", email=" + email + ", address=" + address + ", orders=" + orders + "]";
+	}
+
+	
+	
+	
+	
+	
+	
+	}
