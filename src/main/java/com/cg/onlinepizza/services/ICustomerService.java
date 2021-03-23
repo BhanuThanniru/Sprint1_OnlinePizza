@@ -1,10 +1,14 @@
-package com.cg.onlinepizza.service;
+package com.cg.onlinepizza.services;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import com.cg.onlinepizza.entities.Customer;
 import com.cg.onlinepizza.exceptions.CustomerIdNotFoundException;
 
+@Service
 public interface ICustomerService {
 	Customer addCustomer(Customer customer);
 
@@ -12,7 +16,7 @@ public interface ICustomerService {
 
 	Customer deleteCustomer(int customerId) throws CustomerIdNotFoundException;
 
-	List<Customer> viewCustomers();
+	List<Customer> getCustomers();
 
-	Customer viewCustomer(int customerId) throws CustomerIdNotFoundException;
+	Optional<Customer> getCustomer(int customerId) throws CustomerIdNotFoundException;
 }
