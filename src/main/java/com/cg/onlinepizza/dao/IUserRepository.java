@@ -3,9 +3,11 @@ package com.cg.onlinepizza.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.cg.onlinepizza.entities.Coupan;
+import com.cg.onlinepizza.entities.User;
 
 @Repository
-public interface ICoupanRepository extends JpaRepository<Coupan, Integer>
-{
+public interface IUserRepository extends JpaRepository<User,Integer> {
+	
+	
+
 }
