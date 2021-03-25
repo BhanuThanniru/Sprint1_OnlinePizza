@@ -1,119 +1,204 @@
 package com.cg.onlinepizza.entities;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "PizzaOrder")
 public class Order {
-	
+
 	@Id
-	private int orderId;
-	private String orderType;
-	private String orderDescription;
-	
-	@OneToOne
-	private Customer customerId;
-	private String transactionMode;
-	
-	@ElementCollection
-	Map<Pizza,Integer> mapPizzaQuantity;
-	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id_order")
+	@SequenceGenerator(name = "id_order", sequenceName="ID_SEQUENCE_FOR_ORDER" ,initialValue = 10001)
+	private int id;
+
+	@NotNull(message = "Pizza Type is required while ordering")
+	private String type;
+	private String description;
+
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name="customer_id", nullable=false)
+	private Customer customer;
+
+	@NotNull(message = "Select mode of transaction to order")
+	@Enumerated(EnumType.STRING)
+	private TransactionMode transactionMode;
+
+	private LocalDate localDate = LocalDate.now();
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name ="order_id")
+	private List<Cart> cart = new ArrayList<Cart>();
+
 	@OneToOne
 	private Coupan coupan;
 	private double totalCost;
-	
 	public Order() {
 		super();
 	}
 
-	public Order(int orderId, String orderType, String orderDescription, Customer customerId,
-			String transactionMode, Map<Pizza, Integer> mapPizzaQuantity, Coupan coupan, double totalCost) {
+	
+	public Order(String type, String description, Customer customer, TransactionMode transactionMode, List<Cart> cart, Coupan coupan, double totalCost) {
 		super();
-		this.orderId = orderId;
-		this.orderType = orderType;
-		this.orderDescription = orderDescription;
-		this.customerId = customerId;
+		this.type = type;
+		this.description = description;
+		this.customer = customer;
 		this.transactionMode = transactionMode;
-		this.mapPizzaQuantity = mapPizzaQuantity;
+		this.cart = cart;
 		this.coupan = coupan;
 		this.totalCost = totalCost;
 	}
 
-	@Override
-	public String toString() {
-		return "OrderMain [orderId=" + orderId + ", orderType=" + orderType + ", orderDescription=" + orderDescription
-				+ ", customerId=" + customerId + ", transactionMode=" + transactionMode + ", mapPizzaQuantity="
-				+ mapPizzaQuantity + ", coupan=" + coupan + ", totalCost=" + totalCost + "]";
+
+	public Order(int id, String type, String description, Customer customer, TransactionMode transactionMode, List<Cart> cart, Coupan coupan, double totalCost) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.description = description;
+		this.customer = customer;
+		this.transactionMode = transactionMode;
+		this.cart = cart;
+		this.coupan = coupan;
+		this.totalCost = totalCost;
 	}
 
-	public int getOrderId() {
-		return orderId;
+	public Order(int id, String type, String description,Customer customer, TransactionMode transactionMode,
+			LocalDate localDate, List<Cart> cart, Coupan coupan, double totalCost) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.description = description;
+		this.customer = customer;
+		this.transactionMode = transactionMode;
+		this.localDate = localDate;
+		this.cart = cart;
+		this.coupan = coupan;
+		this.totalCost = totalCost;
 	}
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public Order(int id, String type, String description) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.description = description;
 	}
 
-	public String getOrderType() {
-		return orderType;
-	}
 
-	public void setOrderType(String orderType) {
-		this.orderType = orderType;
-	}
-
-	public String getOrderDescription() {
-		return orderDescription;
-	}
-
-	public void setOrderDescription(String orderDescription) {
-		this.orderDescription = orderDescription;
-	}
-
-	public Customer getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(Customer customerId) {
-		this.customerId = customerId;
-	}
-
-	public String getTransactionMode() {
-		return transactionMode;
-	}
-
-	public void setTransactionMode(String transactionMode) {
+	public Order(int id, String type, String description, TransactionMode transactionMode) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.description = description;
 		this.transactionMode = transactionMode;
 	}
 
-	public Map<Pizza, Integer> getMapPizzaQuantity() {
-		return mapPizzaQuantity;
+
+
+	public Order(String type, String description, Customer customer, TransactionMode transactionMode, List<Cart> cart, Coupan coupan) {
+		super();
+		this.type = type;
+		this.description = description;
+		this.customer = customer;
+		this.transactionMode = transactionMode;
+		this.cart = cart;
+		this.coupan = coupan;
 	}
 
-	public void setMapPizzaQuantity(Map<Pizza, Integer> mapPizzaQuantity) {		
+
+
+	public Order(String type, String description, Customer customer, TransactionMode transactionMode,
+			Coupan coupan) {
+		super();
+		this.type = type;
+		this.description = description;
+		this.customer = customer;
+		this.transactionMode = transactionMode;
+		this.coupan = coupan;	
+	}
+	
+	
+	public LocalDate getLocalDate() {
+		return localDate;
+	}
+
+	public void setLocalDate(LocalDate localDate) {
+		this.localDate = localDate;
+	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public TransactionMode getTransactionMode() {
+		return transactionMode;
+	}
+	public void setTransactionMode(TransactionMode transactionMode) {
+		this.transactionMode = transactionMode;
+	}
+	public List<Cart> getCart() {
+		return cart;
+	}
+
+	public void setCart(List<Cart> cart) {
+		this.cart = cart;
 	}
 
 	public Coupan getCoupan() {
 		return coupan;
 	}
-
 	public void setCoupan(Coupan coupan) {
 		this.coupan = coupan;
 	}
-
 	public double getTotalCost() {
 		return totalCost;
 	}
-
 	public void setTotalCost(double totalCost) {
 		this.totalCost = totalCost;
 	}
 
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", type=" + type + ", description=" + description + ", customer=" + customer
+				+ ", transactionMode=" + transactionMode + ", localDate=" + localDate + ", cart=" + cart + ", coupan="
+				+ coupan + ", totalCost=" + totalCost + "]";
+	}
 }

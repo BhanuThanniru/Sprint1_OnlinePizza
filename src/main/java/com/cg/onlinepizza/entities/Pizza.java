@@ -1,103 +1,99 @@
 package com.cg.onlinepizza.entities;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name ="PizzaMain")
-
-
-// PizzaMain pizza = new PizzaMain(2, "Paneer", "Paneer", "Medium", "Too good")
-
-//PizzaMain pizza2 = new PizzaMain(3, "Paneer", "Paneer", "Large", "Too good")
-//PizzaMain pizza3 = new PizzaMain(4, "Paneer", "Paneer", "Regular", "Too good")
+@Table(name ="Pizza")
 public class Pizza {
 
 	@Id
-	private int pizzaId;
-	private String pizzaType;
-	private String pizzaName;
-	private String pizzaDescription;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id_pizza")
+	@SequenceGenerator(name = "id_pizza", sequenceName="ID_SEQUENCE_FOR_PIZZA" ,initialValue = 101)
+	private int id;
 	
-	@ElementCollection
-	private Map<String,Integer> map1 ;//String - PizzaSize, Integer - price
+	@NotNull(message = "Pizza Type is required")
+	private String type;
+	
+	@NotNull(message = "Pizza Name is required")
+	private String name;
+	private String description;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Pizza_ID")
+	List<PizzaCost> costList = new ArrayList<PizzaCost>();
 
 	public Pizza() {
 		super();
 	}
 
-	
-	public Pizza(int pizzaId, String pizzaType, String pizzaName, String pizzaDescription) {
+	public Pizza(String type, String name, String description, List<PizzaCost> costList) {
 		super();
-		this.pizzaId = pizzaId;
-		this.pizzaType = pizzaType;
-		this.pizzaName = pizzaName;
-		this.pizzaDescription = pizzaDescription;
+		this.type = type;
+		this.name = name;
+		this.description = description;
+		this.costList = costList;
 	}
 
-
-	public Pizza(int pizzaId, String pizzaType, String pizzaName, String pizzaDescription,
-			Map<String, Integer> map1) {
+	public Pizza(int id, String type, String name, String description) {
 		super();
-		this.pizzaId = pizzaId;
-		this.pizzaType = pizzaType;
-		this.pizzaName = pizzaName;
-		this.pizzaDescription = pizzaDescription;
-		this.map1 = map1;
+		this.id = id;
+		this.type = type;
+		this.name = name;
+		this.description = description;
 	}
-
+	public Pizza(int id, String type, String name, String description, List<PizzaCost> costList) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.name = name;
+		this.description = description;
+		this.costList = costList;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public List<PizzaCost> getCostList() {
+		return costList;
+	}
+	public void setCostList(List<PizzaCost> costList) {
+		this.costList = costList;
+	}
 	@Override
 	public String toString() {
-		return "PizzaMain [pizzaId=" + pizzaId + ", pizzaType=" + pizzaType + ", pizzaName=" + pizzaName
-				+ ", pizzaDescription=" + pizzaDescription + ", map1=" + map1 + "]";
+		return "Pizza [id=" + id + ", type=" + type + ", name=" + name + ", description=" + description + ", costList="
+				+ costList + "]";
 	}
-
-	public int getPizzaId() {
-		return pizzaId;
-	}
-
-	public void setPizzaId(int pizzaId) {
-		this.pizzaId = pizzaId;
-	}
-
-	public String getPizzaType() {
-		return pizzaType;
-	}
-
-	public void setPizzaType(String pizzaType) {
-		this.pizzaType = pizzaType;
-	}
-
-	public String getPizzaName() {
-		return pizzaName;
-	}
-
-	public void setPizzaName(String pizzaName) {
-		this.pizzaName = pizzaName;
-	}
-
-	public String getPizzaDescription() {
-		return pizzaDescription;
-	}
-
-	public void setPizzaDescription(String pizzaDescription) {
-		this.pizzaDescription = pizzaDescription;
-	}
-
-	public Map<String, Integer> getMap1() {
-		return map1;
-	}
-
-	public void setMap1(Map<String, Integer> map1) {
-		this.map1 = map1;
-	}
-	
-	
-	
-	
-
 }
