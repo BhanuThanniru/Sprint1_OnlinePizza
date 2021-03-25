@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name ="Pizza")
@@ -23,15 +23,13 @@ public class Pizza {
 	@SequenceGenerator(name = "id_pizza", sequenceName="ID_SEQUENCE_FOR_PIZZA" ,initialValue = 101)
 	private int id;
 	
-	@NotEmpty(message = "Pizza Type is required")
+	@NotNull(message = "Pizza Type is required")
 	private String type;
 	
-	@NotEmpty(message = "Pizza Name is required")
+	@NotNull(message = "Pizza Name is required")
 	private String name;
-	
 	private String description;
 	
-
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Pizza_ID")
 	List<PizzaCost> costList = new ArrayList<PizzaCost>();

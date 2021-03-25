@@ -1,11 +1,7 @@
 package com.cg.onlinepizza.services;
 
 import java.util.List;
-import java.util.Optional;
-
-import com.cg.onlinepizza.entities.Customer;
 import com.cg.onlinepizza.entities.Order;
-import com.cg.onlinepizza.entities.Pizza;
 import com.cg.onlinepizza.exceptions.CustomerIdNotFoundException;
 import com.cg.onlinepizza.exceptions.InvalidSizeException;
 import com.cg.onlinepizza.exceptions.OrderIdNotFoundException;
@@ -21,10 +17,8 @@ public interface IOrderService {
 	
 	List<Order> getOrders();
 
-	Order calculateTotal(String size,  Order order) throws InvalidSizeException, CustomerIdNotFoundException, OrderIdNotFoundException;
-	//Order calculateTotal(String size, Order order) throws InvalidSizeException;
+	Order calculateTotal(Order order) throws InvalidSizeException, CustomerIdNotFoundException;
 
-	//Order patchTheOrder(Order order);
 }
 
 

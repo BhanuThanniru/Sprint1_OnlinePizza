@@ -92,7 +92,103 @@ Hibernate:
        add constraint FKika1ehf8jpcajxub4byo0hfd7 
        foreign key (customer_customer_id) 
        references pizza_customer
+    
        
+ -----------------24-03-2021-------------
+ Hibernate: 
+    
+    create table coupan (
+       id number(10,0) not null,
+        description varchar2(255),
+        name varchar2(255),
+        price_discount number(10,0) not null,
+        type varchar2(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table order_cart (
+       order_id number(10,0) not null,
+        cart number(10,0),
+        cart_key number(10,0) not null,
+        primary key (order_id, cart_key)
+    )
+Hibernate: 
+    
+    create table pizza (
+       id number(10,0) not null,
+        description varchar2(255),
+        name varchar2(255),
+        type varchar2(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table pizza_cost (
+       cost_id number(10,0) not null,
+        cost double precision not null,
+        pizza_size varchar2(255) not null,
+        pizza_id number(10,0),
+        primary key (cost_id)
+    )
+Hibernate: 
+    
+    create table pizza_order (
+       id number(10,0) not null,
+        description varchar2(255),
+        total_cost double precision not null,
+        transaction_mode varchar2(255),
+        type varchar2(255),
+        coupan_id number(10,0),
+        customer_id number(10,0),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table users (
+       dtype varchar2(31) not null,
+        id number(10,0) not null,
+        mobile_number varchar2(255) not null,
+        password varchar2(255) not null,
+        role varchar2(255) not null,
+        address varchar2(255),
+        email varchar2(255),
+        name varchar2(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table users 
+       drop constraint UK_r7c96a004bv8w16jgdm8imich
+Hibernate: 
+    
+    alter table users 
+       add constraint UK_r7c96a004bv8w16jgdm8imich unique (mobile_number)
+Hibernate: 
+    
+    alter table order_cart 
+       add constraint FKm4aggn98gb50t97cuq6uamisc 
+       foreign key (order_id) 
+       references pizza_order
+Hibernate: 
+    
+    alter table pizza_cost 
+       add constraint FKdi86g4mu9vtb5c1qdprtcc2pi 
+       foreign key (pizza_id) 
+       references pizza
+Hibernate: 
+    
+    alter table pizza_order 
+       add constraint FKe53d7posgpsp41m3s4dka3up3 
+       foreign key (coupan_id) 
+       references coupan
+Hibernate: 
+    
+    alter table pizza_order 
+       add constraint FKmyux7i90upn8gob1jagasurj4 
+       foreign key (customer_id) 
+       references users
+
        
  create table coupan (
        id number(10,0) not null,

@@ -1,13 +1,19 @@
 package com.cg.onlinepizza.exceptions;
 
 public class ErrorMessage {
-	private String status;
-	private String message;
+	
+	public String status;
+	public String message;
 	public ErrorMessage(String status, String message) {
 		super();
 		this.status = status;
 		this.message = message;
 	}
+	
+	public ErrorMessage() {
+		super();
+	}
+	
 	@Override
 	public String toString() {
 		return "ErrorMessage [status=" + status + ", message=" + message + "]";

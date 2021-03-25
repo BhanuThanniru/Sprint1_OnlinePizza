@@ -1,8 +1,5 @@
 package com.cg.onlinepizza.exceptions;
 
-import java.net.http.HttpHeaders;
-import java.sql.Date;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -74,17 +71,3 @@ public class OnlinePizzaExceptionHandler {
 	}
 
 }
-
-
-
-
-/*
- * @ResponseBody
- * 
- * @ResponseStatus(HttpStatus.BAD_REQUEST)
- * 
- * @ExceptionHandler({PizzaIdNotFoundException.class}) public ErrorMessage
- * PizzaIdNotFoundException(PizzaIdNotFoundException exception) { return new
- * ErrorMessage("400", exception.getMessage()); }
- */
-

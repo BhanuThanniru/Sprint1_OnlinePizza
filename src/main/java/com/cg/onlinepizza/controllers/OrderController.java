@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +19,6 @@ import com.cg.onlinepizza.entities.Order;
 import com.cg.onlinepizza.exceptions.CustomerIdNotFoundException;
 import com.cg.onlinepizza.exceptions.InvalidSizeException;
 import com.cg.onlinepizza.exceptions.OrderIdNotFoundException;
-import com.cg.onlinepizza.services.ICoupanService;
 import com.cg.onlinepizza.services.ICustomerService;
 import com.cg.onlinepizza.services.IOrderService;
 
@@ -49,9 +47,10 @@ public class OrderController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Order> bookOrder(@Valid @RequestBody Order order) {
-		orderService.bookOrder(order);
-		return new ResponseEntity<Order>(order, HttpStatus.CREATED);
+	public ResponseEntity<Order> bookOrder(@Valid @RequestBody Order order) throws InvalidSizeException, CustomerIdNotFoundException, OrderIdNotFoundException {
+		Order order1 = orderService.calculateTotal(order);
+		orderService.bookOrder(order1);
+		return new ResponseEntity<Order>(order1, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
@@ -60,23 +59,15 @@ public class OrderController {
 		int custId = customer.getId();
 		
 		order2.setCustomer(customer);
-		custService.updateCustomer(customer);
+		custService.updateCustomer(custId, customer);
 		Order updatedOrder = orderService.updateOrder(order2);	
 		return new ResponseEntity<Order>(updatedOrder, HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Order> cancelOrder(@PathVariable int id) throws OrderIdNotFoundException{
+	public ResponseEntity<?> cancelOrder(@PathVariable int id) throws OrderIdNotFoundException{
 		orderService.cancelOrder(id);
-		return new ResponseEntity<Order>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(id,HttpStatus.ACCEPTED);
 		
 	}
-	@PutMapping("/cost/{size}")
-	public ResponseEntity<Order> calculateTotalCost(@PathVariable String size, @RequestBody Order order) throws InvalidSizeException, CustomerIdNotFoundException, OrderIdNotFoundException
-	{
-		order = orderService.calculateTotal(size, order);
-		orderService.updateOrder(order);
-		return new ResponseEntity<Order>(order, HttpStatus.OK);
-	}
-	
 }

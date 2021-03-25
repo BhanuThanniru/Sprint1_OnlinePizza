@@ -10,9 +10,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
-@Table(name="Sprint1_onlinepizza_User")
-public class User {
+@Table(name="Users")
+
+public class User{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator  = "id")
     @SequenceGenerator(name = "id" ,initialValue = 10001)
@@ -24,6 +28,7 @@ public class User {
 	protected String mobileNumber;
 	
 	@NotNull(message="Password can't be blank")
+	@JsonProperty(access=Access.WRITE_ONLY)
 	protected String password;
 	
 	@NotNull(message="Role should either be customer or admin")
@@ -44,9 +49,6 @@ public class User {
 		this.password = password;
 		this.role = role;
 	}
-	
-	
-
 
 	public User(@NotNull(message = "Mobile Number should not be blank") String mobileNumber,
 			@NotNull(message = "Role should either be customer or admin") String role) {
@@ -93,11 +95,5 @@ public class User {
 	public String toString() {
 		return "User [userId=" + id + ", mobileNumber=" + mobileNumber + ", password=" + password + ", role=" + role
 				+ "]";
-	}
-	
-	
-	
-	
-	
-
+	}	
 }

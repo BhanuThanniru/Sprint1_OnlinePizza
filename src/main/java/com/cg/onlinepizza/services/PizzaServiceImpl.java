@@ -1,22 +1,12 @@
 package com.cg.onlinepizza.services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cg.onlinepizza.dao.IPizzaRepository;
 import com.cg.onlinepizza.entities.Pizza;
-import com.cg.onlinepizza.entities.PizzaCost;
-import com.cg.onlinepizza.entities.Size;
-import com.cg.onlinepizza.exceptions.InvalidMinCostException;
 import com.cg.onlinepizza.exceptions.PizzaIdNotFoundException;
 
 @Service
@@ -50,8 +40,6 @@ public class PizzaServiceImpl implements IPizzaService {
 		return pizzaList;
 	}
 	
-	
-
 	@Override
 	public Pizza updatePizza(Pizza pizza) throws PizzaIdNotFoundException {
 		int pizzaId = pizza.getId();
@@ -73,20 +61,4 @@ public class PizzaServiceImpl implements IPizzaService {
 		List<Pizza> pizza = pizzaRepository.getPizzaByName(pizzaName);
 		return pizza;
 	}
-
-	@Override
-	public List<Pizza> getPizzaMinMaxCost(double minCost, double maxCost) throws InvalidMinCostException {
-		List<PizzaCost> pizzaCost =  pizzaRepository.getPizzaListOfMinMaxCost(minCost, maxCost);
-		List<Pizza> pizza = pizzaRepository.findAll();
-		List<Pizza> pizzaListMinMaxCost = new ArrayList<Pizza>();
-		for(Pizza p : pizza)
-		{
-			System.out.println(p.getCostList());
-			
-			
-		}
-		System.out.println(pizzaListMinMaxCost);
-		return pizzaListMinMaxCost;
-	}
-	
 }
