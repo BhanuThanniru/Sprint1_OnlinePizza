@@ -14,12 +14,7 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserRepository userRepo;
 
-	@Override
-	public User addUser(User user) {
-
-		return userRepo.save(user);
-	}
-
+	
 	@Override
 	public List<User> getAllUsers() 
 	{
@@ -27,35 +22,27 @@ public class UserServiceImpl implements IUserService {
 		return UserList;
 	}
 
+	
+	
 	@Override
-	public User signIn(User user) {
-
-		List<User> userList = getAllUsers();
-		for (User systemUser : userList) 
-		{
-			if ( (systemUser.getMobileNumber().equals(user.getMobileNumber())) && (systemUser.getPassword().equals(user.getPassword()))) 
-			{
-				System.out.println("Successfully signed in...");
-			}
-			return user;
-		}
-		return null;
+	public User addUser(User user) {
+ 
+       return userRepo.save(user);
+    }
+	
+	@Override
+	public User findCustomer(User user) {
+		User dbUser =  userRepo.findByEmail(user.getEmail());
+    	System.out.println("db user " +dbUser);
+    	if(dbUser==null)
+    		throw new RuntimeException("user does nt exist");
+    	if(!dbUser.getPassword().contentEquals(user.getPassword())) {
+    		throw new RuntimeException("password mismatch");}
+    	System.out.println("returning dbuser");
+    	return dbUser;
 	}
 
-	@Override
-	public User signOut(User user) {
-		List<User> userList = getAllUsers();
-		for (User systemUser : userList) 
-		{
-			if(systemUser.getMobileNumber().equals(user.getMobileNumber()))
-			{
-				System.out.println("Successfully signed out...");
-				return user;
-			}
+	
 
-			else
-				return null;	
-		}
-		return null;
-	}
+	
 }

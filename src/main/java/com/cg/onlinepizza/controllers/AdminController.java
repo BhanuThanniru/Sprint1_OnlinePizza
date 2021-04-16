@@ -45,19 +45,9 @@ public class AdminController {
 	@Autowired 
 	ICoupanService coupanService;
 
-	@PostMapping("/signIn")
-	public ResponseEntity<?> signIn(@RequestBody User user)
-	{
-		userService.signIn(user);
-		return new ResponseEntity<>("Sign in successful", HttpStatus.OK);
-	}
+	
 
-	@PostMapping("/signOut")
-	public ResponseEntity<?> signOut(@RequestBody User user)
-	{
-		userService.signOut(user);
-		return new ResponseEntity<>("Signed Out Successfully", HttpStatus.OK);
-	}
+	
 
 	@GetMapping("/customers") 
 	public ResponseEntity<List<Customer>> getCustomers() 

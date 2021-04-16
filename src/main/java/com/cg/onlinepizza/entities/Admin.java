@@ -8,6 +8,20 @@ import javax.persistence.Entity;
   @DiscriminatorValue(value="Admin")
   @Entity
   public class Admin extends User{
+
+	public Admin(int id, String email, String password) {
+		super(id, email, password);
+		
+	}
+
+	public Admin(String email, String password) {
+		super(email, password);
+		
+	}
+	
+	public Admin() {
+		super();
+	}
   
   }
   

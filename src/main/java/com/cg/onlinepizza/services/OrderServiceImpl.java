@@ -81,11 +81,12 @@ public class OrderServiceImpl implements IOrderService {
 			totalCost +=baseCost;
 		}
 
-		Coupan coupan = coupanRepo.findById(order.getCoupan().getId()).get();
+		
 		if(order.getCoupan()== null) { 
 			order.setTotalCost(totalCost);
 		}
 		else {
+			Coupan coupan = coupanRepo.findById(order.getCoupan().getId()).get();
 		totalCost -= coupan.getPriceDiscount();
 		order.setTotalCost(totalCost);
 		}

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Customer extends User {
 
 	private String name;
-	private String email;
+	private String mobileNumber;
 	private String address;
 
 	@OneToMany(cascade=CascadeType.ALL,mappedBy = "customer")
@@ -23,11 +23,11 @@ public class Customer extends User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getEmail() {
-		return email;
+	public String getMobileNumber() {
+		return mobileNumber;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 	public String getAddress() {
 		return address;
@@ -43,41 +43,29 @@ public class Customer extends User {
 		this.orders = orders;
 	}
 	
-	public Customer(int id, String mobileNumber, String password, String role, String address) {
-		super(id, mobileNumber, password, role);
-		this.address = address;
-	}
-	public Customer(String mobileNumber, String password, String role) {
-		super(mobileNumber, password, role);
-	}
+	
 	public Customer() {
 		super();
 	}
-	public Customer(int id, String mobileNumber, String password, String role, String name, String email) {
-		super(id, mobileNumber, password, role);
-		this.name = name;
-		this.email = email;
-	}
 	
-	public Customer(String mobileNumber, String password, String role,String name) {
-		super(mobileNumber, password, role);
-		this.name=name;
+	
+	public Customer(int id, String mobileNumber, String password) {
+		super(id, mobileNumber, password);
+		
 	}
-	public Customer(int id, String mobileNumber, String password, String role, String name, String email, String address) {
-		super(id, mobileNumber, password, role);
-		this.name = name;
-		this.email = email;
-		this.address = address;
+	public Customer(String email, String password) {
+		super(email, password);
+		
 	}
 	public Customer(String name, String email, String address,  List<Order> orders) {
 		super();
 		this.name = name;
-		this.email = email;
+		this.mobileNumber = email;
 		this.address = address;
 		this.orders = orders;
 	}	
 	@Override
 	public String toString() {
-		return "Customer  name=" + name + ", email=" + email + ", address=" + address + ", orders=" + orders + "]";
+		return "Customer  name=" + name + ", email=" + mobileNumber + ", address=" + address + ", orders=" + orders + "]";
 	}
 }

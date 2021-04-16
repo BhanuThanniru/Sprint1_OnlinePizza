@@ -24,43 +24,32 @@ public class User{
 	
 	@NotNull(message="Mobile Number should not be blank")
 	@NotBlank(message="Mobile Number should not be blank")
-	@Column(unique=true,name="mobileNumber")
-	protected String mobileNumber;
+	protected String email;
 	
 	@NotNull(message="Password can't be blank")
-	@JsonProperty(access=Access.WRITE_ONLY)
 	protected String password;
 	
-	@NotNull(message="Role should either be customer or admin")
-	protected String role;
 	
-	public User(int id, String mobileNumber, String password, String role) {
+	public User(int id, String email, String password) {
 		super();
 		this.id=id;
-		this.mobileNumber = mobileNumber;
+		this.email = email;
 		this.password = password;
-		this.role = role;
+		
 	}
 	
 	
-	public User(String mobileNumber, String password, String role) {
+	public User(String email, String password) {
 		super();
-		this.mobileNumber = mobileNumber;
+		this.email = email;
 		this.password = password;
-		this.role = role;
 	}
 
-	public User(@NotNull(message = "Mobile Number should not be blank") String mobileNumber,
-			@NotNull(message = "Role should either be customer or admin") String role) {
-		super();
-		this.mobileNumber = mobileNumber;
-		this.role = role;
-	}
-
+	
 
 	public User(@NotNull(message = "Mobile Number should not be blank") String mobileNumber) {
 		super();
-		this.mobileNumber = mobileNumber;
+		this.email = mobileNumber;
 	}
 
 
@@ -73,11 +62,11 @@ public class User{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getMobileNumber() {
-		return mobileNumber;
+	public String getEmail() {
+		return email;
 	}
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
@@ -85,15 +74,10 @@ public class User{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
-	}
+	
 	@Override
 	public String toString() {
-		return "User [userId=" + id + ", mobileNumber=" + mobileNumber + ", password=" + password + ", role=" + role
+		return "User [userId=" + id + ", mobileNumber=" + email + ", password=" + password 
 				+ "]";
 	}	
 }

@@ -35,18 +35,6 @@ public class UserController {
 		return new ResponseEntity<>(list1,HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/signin")
-	public ResponseEntity<?> signIn(@Valid @RequestBody User user)
-	{
-		userService.signIn(user);
-		return new ResponseEntity<>("LoginSuccessful",HttpStatus.OK);
-	}
 	
-	@PostMapping("/signout")
-	public ResponseEntity<?> signOut(@RequestBody User user)
-	{
-		userService.signOut(user);
-		return new ResponseEntity<>("You have been logged out successfully",HttpStatus.OK);
-	}
 		
 }

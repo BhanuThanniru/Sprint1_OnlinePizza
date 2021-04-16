@@ -39,9 +39,7 @@ class CustomerServiceTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		cust1=new Customer(1,"997686543","Hello","customer","Neha","ns05@gmail.com","shakarpur");
-		cust2=new Customer(2,"783825478","World","customer","Ajay","ajay@gmail.com","Noida");
-		cust3=new Customer(3,"9872431256","Abc123","customer","Sanjay","sanjay@gmail.com","RK Puram");
+		
 	}
 
 

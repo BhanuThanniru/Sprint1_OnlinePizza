@@ -1,10 +1,13 @@
 package com.cg.onlinepizza.controllers;
 
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +16,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.cg.onlinepizza.entities.Customer;
 import com.cg.onlinepizza.exceptions.CustomerIdNotFoundException;
 import com.cg.onlinepizza.services.ICustomerService;
 
- 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 
 @RestController
 @RequestMapping("/customers")
@@ -63,16 +67,5 @@ public class CustomerController {
         
             return new ResponseEntity<>(c1,HttpStatus.OK);
     }
-    @PostMapping("/signin")
-    public ResponseEntity<?> custSignIn(@Valid @RequestBody Customer cust)
-    {
-        Customer c1=customerService.custSignIn(cust);
-        if(c1==null)
-        {
-        return new ResponseEntity<>("credentials are not right",HttpStatus.BAD_REQUEST);}
-        else
-        {
-            return new ResponseEntity<>("LoginSuccessful",HttpStatus.OK);
-        }
-    }
+   
 }

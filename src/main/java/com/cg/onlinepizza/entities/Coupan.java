@@ -1,5 +1,5 @@
 package com.cg.onlinepizza.entities;
-
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +21,7 @@ public class Coupan {
 	private String type;
 	private String description;
 	private int priceDiscount;
+	private LocalDate ExpiryDate = LocalDate.now().plusMonths(3);
 
 	public int getId() {
 		return id;
@@ -52,6 +53,13 @@ public class Coupan {
 	public void setPriceDiscount(int priceDiscount) {
 		this.priceDiscount = priceDiscount;
 	}
+
+	public LocalDate getExpiryDate() {
+		return ExpiryDate;
+	}
+	public void setExpiryDate(LocalDate expiryDate) {
+		ExpiryDate = expiryDate;
+	}
 	public Coupan(int id, String name, String type, String description, int priceDiscount) {
 		super();
 		this.id = id;
@@ -61,12 +69,22 @@ public class Coupan {
 		this.priceDiscount = priceDiscount;
 	}
 
+
+
+	public Coupan(@NotEmpty(message = "Coupan Name is mandatory") String name,
+			@NotEmpty(message = " Coupan Type should be specified") String type, String description,
+			int priceDiscount) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.description = description;
+		this.priceDiscount = priceDiscount;
+	}
 	@Override
 	public String toString() {
 		return "Coupan [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description
-				+ ", priceDiscount=" + priceDiscount + "]";
+				+ ", priceDiscount=" + priceDiscount + ", ExpiryDate=" + ExpiryDate + "]";
 	}
-
 	public Coupan() {
 		super();
 	}

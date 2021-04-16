@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.cg.onlinepizza.entities.Customer;
+import com.cg.onlinepizza.entities.User;
 import com.cg.onlinepizza.exceptions.CustomerIdNotFoundException;
 
 @Service
@@ -17,7 +18,9 @@ public interface ICustomerService {
 	List<Customer> viewCustomers();
 
 	Customer viewCustomer(int customerId) throws CustomerIdNotFoundException;
+	
+	
 
-	Customer custSignIn(Customer cust);
+
 
 }

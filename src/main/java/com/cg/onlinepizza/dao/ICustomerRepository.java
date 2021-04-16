@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cg.onlinepizza.entities.Customer;
 import com.cg.onlinepizza.entities.Order;
+import com.cg.onlinepizza.entities.User;
 
 
 @Repository
@@ -16,5 +17,7 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer> {
 	
 	 @Query("select p from Order p where p.customer.id= :customerId")
 	  List<Order> getAllOrders(@Param("customerId") int customerId);
+	 
+	 
 
 }
